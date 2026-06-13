@@ -94,55 +94,94 @@ main{position:relative;z-index:1;display:flex;flex-direction:column;align-items:
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--b0);color:var(--white);padding:10px 22px;border-radius:25px;font-size:.74rem;font-weight:700;box-shadow:0 6px 32px rgba(0,0,0,.3);z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;white-space:nowrap;}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 /* QUIZ PAGE */
-#quizPage{display:none;position:relative;z-index:1;width:100%;max-width:680px;margin:0 auto;padding:20px 16px 40px;}
-.qp-header{text-align:center;margin-bottom:18px;}
-.qp-title{font-family:'Lora',serif;font-size:1.3rem;font-weight:600;color:var(--b0);margin-bottom:4px;}
-.qp-sub{font-size:.72rem;color:var(--b2);font-weight:600;}
-.qp-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;}
-.qp-tab{background:var(--white);border:2px solid var(--b6);border-radius:20px;padding:6px 18px;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:700;color:var(--b2);cursor:pointer;transition:all .18s;}
-.qp-tab:hover{border-color:var(--b3);color:var(--b1);}
-.qp-tab.active{background:var(--b2);border-color:var(--b2);color:var(--white);}
-.qp-panel{display:none;}
-.qp-panel.active{display:block;}
+#quizPage{
+  display:none; position:relative; z-index:1;
+  width:100%; max-width:560px; margin:0 auto;
+  padding:16px 14px 60px;
+  -webkit-overflow-scrolling:touch;
+}
+.qp-header{text-align:center;margin-bottom:14px;}
+.qp-title{font-family:'Lora',serif;font-size:1.15rem;font-weight:600;color:var(--b0);margin-bottom:3px;}
+.qp-sub{font-size:.68rem;color:var(--b2);font-weight:600;}
 /* QUIZ WIDGET */
-.qwrap{background:linear-gradient(155deg,#eef8ff,#d8ecf8);border-radius:14px;padding:16px;margin-bottom:16px;}
+.qwrap{background:linear-gradient(155deg,#eef8ff,#d8ecf8);border-radius:14px;padding:14px;margin-bottom:12px;}
 .qwrap,.qwrap *{-webkit-user-select:text;user-select:text;pointer-events:auto;}
 .qwrap input[type="radio"]{-webkit-user-select:none;user-select:none;cursor:pointer;}
 .qwrap label,.qwrap button{cursor:pointer;}
-.qt-title{font-family:'Lora',serif;font-size:.95rem;font-weight:600;color:var(--b0);text-align:center;border-bottom:2px solid var(--b6);padding-bottom:6px;margin-bottom:4px;}
-.qt-sub{font-size:.6rem;color:var(--b2);text-align:center;margin-bottom:6px;font-weight:700;}
+.qt-title{display:none;}
+.qt-sub{display:none;}
+.qt-sub{font-size:.58rem;color:var(--b2);text-align:center;margin-bottom:5px;font-weight:700;}
 .qpb-bg{background:var(--b6);border-radius:20px;height:6px;overflow:hidden;margin-bottom:3px;}
 .qpb{height:100%;width:0%;background:var(--b3);border-radius:20px;transition:width .4s;}
-.qpl{font-size:.6rem;color:var(--b2);text-align:right;margin-bottom:6px;}
-.att-row{display:flex;align-items:center;gap:4px;margin-bottom:5px;}
+.qpl{font-size:.6rem;color:var(--b2);text-align:right;margin-bottom:8px;}
+.att-row{display:flex;align-items:center;gap:4px;margin-bottom:6px;}
 .att-lbl{font-size:.58rem;color:var(--b1);font-weight:700;margin-right:2px;}
 .att-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--b4);background:var(--white);display:inline-block;transition:background .2s;}
-.q-card{background:var(--white);border-radius:10px;border:1.5px solid var(--b6);padding:12px;margin-bottom:4px;box-shadow:0 2px 12px rgba(41,128,185,.07);display:none;flex-direction:column;}
+/* kartu soal */
+.q-card{background:var(--white);border-radius:10px;border:1.5px solid var(--b6);padding:14px 12px;margin-bottom:4px;box-shadow:0 2px 12px rgba(41,128,185,.07);display:none;flex-direction:column;}
 .q-card.active{display:flex;}
-.q-text{font-size:.78rem;color:var(--b0);font-weight:700;margin-bottom:8px;line-height:1.45;}
-.q-opts{display:flex;flex-direction:column;gap:5px;margin-bottom:6px;}
-.opt-lbl{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:7px;border:1.5px solid var(--b6);cursor:pointer;font-size:.72rem;color:#2c3e50;transition:all .2s;background:var(--b7);line-height:1.3;}
-.opt-lbl:hover{background:var(--b6);border-color:var(--b4);}
-.opt-lbl input{accent-color:var(--b3);flex-shrink:0;}
+/* nomor + teks soal */
+.q-num{font-size:.6rem;font-weight:800;color:var(--b3);letter-spacing:.5px;margin-bottom:4px;text-transform:uppercase;}
+.q-text{font-size:.8rem;color:var(--b0);font-weight:700;margin-bottom:10px;line-height:1.55;white-space:pre-line;}
+/* pilihan jawaban — ukuran tap-friendly untuk HP */
+.q-opts{display:flex;flex-direction:column;gap:7px;margin-bottom:8px;}
+.opt-lbl{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:9px;
+  border:1.5px solid var(--b6);cursor:pointer;
+  font-size:.75rem;color:#2c3e50;
+  transition:all .2s;background:var(--b7);
+  line-height:1.4;
+  min-height:44px; /* tap target minimal 44px untuk HP */
+  -webkit-tap-highlight-color:transparent;
+}
+.opt-lbl:hover,.opt-lbl:active{background:var(--b6);border-color:var(--b4);}
+.opt-lbl input{accent-color:var(--b3);flex-shrink:0;width:16px;height:16px;}
 .opt-lbl.correct{background:#d4edda;border-color:#28a745;color:#155724;font-weight:700;}
 .opt-lbl.wrong{background:#f8d7da;border-color:#dc3545;color:#721c24;}
-.fb-box{border-radius:7px;padding:6px 10px;font-size:.66rem;line-height:1.5;font-weight:600;display:none;margin-bottom:6px;}
+.fb-box{border-radius:8px;padding:8px 12px;font-size:.68rem;line-height:1.55;font-weight:600;display:none;margin-bottom:8px;}
 .fb-box.show{display:block;}
 .fb-wrong{background:#fce8e8;border:1.5px solid #dc3545;color:#7b1f1f;}
 .fb-exhausted{background:#fff3cd;border:1.5px solid #ffc107;color:#856404;}
 .fb-correct{background:#d4edda;border:1.5px solid #28a745;color:#155724;}
-.q-btns{display:flex;gap:8px;}
-.q-btn{background:var(--b3);color:var(--white);border:none;border-radius:8px;padding:7px 16px;font-family:'Nunito',sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;}
-.q-btn:hover{background:var(--b2);transform:translateY(-1px);}
+/* tombol periksa & berikutnya — besar, mudah dipencet di HP */
+.q-btns{display:flex;gap:8px;margin-top:4px;}
+.q-btn{
+  flex:1;background:var(--b3);color:var(--white);border:none;border-radius:10px;
+  padding:12px 10px;font-family:'Nunito',sans-serif;
+  font-size:.76rem;font-weight:800;cursor:pointer;
+  transition:background .2s,transform .15s;
+  min-height:46px;
+  -webkit-tap-highlight-color:transparent;
+}
+.q-btn:hover{background:var(--b2);}
+.q-btn:active{transform:scale(.97);}
 .q-btn-nxt{background:var(--b2);display:none;}
 .q-btn-nxt:hover{background:var(--b1);}
-.score-panel{background:var(--b0);color:var(--white);border-radius:12px;padding:18px;text-align:center;display:none;margin-top:10px;}
+.score-panel{background:var(--b0);color:var(--white);border-radius:12px;padding:20px;text-align:center;display:none;margin-top:12px;margin-bottom:20px;}
 .score-panel.show{display:block;}
-.score-num{font-size:2rem;font-weight:900;color:var(--b5);}
-.score-msg{font-size:.7rem;margin-top:4px;opacity:.9;line-height:1.5;}
-.score-rst{margin-top:10px;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.28);color:var(--white);border-radius:8px;padding:7px 18px;font-family:'Nunito',sans-serif;font-size:.68rem;font-weight:700;cursor:pointer;}
+.score-num{font-size:2.2rem;font-weight:900;color:var(--b5);}
+.score-msg{font-size:.72rem;margin-top:6px;opacity:.9;line-height:1.6;}
+.score-rst{margin-top:12px;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.28);color:var(--white);border-radius:10px;padding:10px 22px;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;min-height:44px;}
 .score-rst:hover{background:rgba(255,255,255,.24);}
 /* RESPONSIVE */
+/* tombol cara menggunakan */
+.menu-cara-btn{margin-top:10px;background:transparent;border:1.5px solid var(--b4);border-radius:20px;padding:7px 20px;color:var(--b2);font-family:'Nunito',sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;transition:background .18s,color .18s;display:flex;align-items:center;gap:6px;}
+.menu-cara-btn:hover{background:var(--b6);color:var(--b1);}
+/* modal cara menggunakan */
+#caraModal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(8,32,47,.55);backdrop-filter:blur(3px);align-items:center;justify-content:center;padding:16px;}
+#caraModal.show{display:flex;}
+.cara-box{background:var(--white);border-radius:18px;padding:24px 22px 20px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto;-webkit-overflow-scrolling:touch;position:relative;box-shadow:0 24px 60px rgba(8,32,47,.35);}
+.cara-close{position:absolute;top:12px;right:14px;background:var(--b6);border:none;border-radius:50%;width:28px;height:28px;font-size:.8rem;cursor:pointer;color:var(--b1);font-weight:700;}
+.cara-close:hover{background:var(--b5);}
+.cara-title{font-family:'Lora',serif;font-size:1.1rem;font-weight:600;color:var(--b0);margin-bottom:16px;text-align:center;}
+.cara-list{display:flex;flex-direction:column;gap:12px;margin-bottom:18px;}
+.cara-item{display:flex;gap:12px;align-items:flex-start;}
+.cara-icon{font-size:1.3rem;flex-shrink:0;margin-top:1px;}
+.cara-item div{font-size:.72rem;color:#2c3e50;line-height:1.6;}
+.cara-item strong{color:var(--b1);}
+.cara-ok{width:100%;background:linear-gradient(135deg,var(--b2),var(--b1));color:var(--white);border:none;border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800;cursor:pointer;}
+.cara-ok:hover{filter:brightness(1.08);}
 @media(max-width:900px){main{padding-left:56px;padding-right:56px;}.nav-prev{left:-50px;}.nav-next{right:-50px;}}
 @media(max-width:640px){main{padding-left:44px;padding-right:44px;}.nav-prev{left:-40px;}.nav-next{right:-40px;}.hd-badge{display:none;}header{flex-direction:column;}.hd-info{width:100%;justify-content:center;}.menu-grid{gap:10px;}.menu-hero-title{font-size:1.3rem;}}
 footer{position:relative;z-index:1;text-align:center;padding:8px;font-size:.6rem;color:var(--b2);opacity:.65;}
@@ -174,6 +213,11 @@ footer{position:relative;z-index:1;text-align:center;padding:8px;font-size:.6rem
     <div class="menu-hero-sub">Pilih Sub Bab untuk mulai belajar</div>
   </div>
 
+  <button class="menu-cara-btn" onclick="openCara()">
+    ❓ Cara Menggunakan Flipbook
+  </button>
+
+  <div style="height:14px"></div>
   <div class="menu-section-label">📖 Materi Sub Bab</div>
   <div class="menu-grid">
     <div class="menu-card" onclick="openFlipbook(0)">
@@ -182,7 +226,7 @@ footer{position:relative;z-index:1;text-align:center;padding:8px;font-size:.6rem
         <img src="1.png" alt="Sub Bab 1" onerror="this.style.display='none'">
       </div>
       <div class="menu-card-body">
-        <div class="menu-card-title">Sub Bab 1⚛️</div>
+        <div class="menu-card-title">Sub Bab 1 ⚛️</div>
         <div class="menu-card-desc">Kestabilan Atom &amp; Struktur Lewis</div>
       </div>
     </div>
@@ -223,9 +267,48 @@ footer{position:relative;z-index:1;text-align:center;padding:8px;font-size:.6rem
     <span class="menu-quiz-icon">📝</span>
     <span class="menu-quiz-text">
       <span class="menu-quiz-title">Latihan Soal</span>
-      <span class="menu-quiz-desc">22 soal · Kestabilan Atom, Ikatan Ion, Ikatan Kovalen &amp; Ikatan Logam</span>
+      <span class="menu-quiz-desc">20 soal · Kestabilan Atom, Ikatan Ion, Ikatan Kovalen &amp; Ikatan Logam</span>
     </span>
   </button>
+</div>
+
+<!-- MODAL CARA MENGGUNAKAN -->
+<div id="caraModal" onclick="closeCara(event)">
+  <div class="cara-box">
+    <button class="cara-close" onclick="closeCara()">✕</button>
+    <div class="cara-title">📖 Cara Menggunakan Flipbook</div>
+    <div class="cara-list">
+      <div class="cara-item">
+        <span class="cara-icon">🏠</span>
+        <div><strong>Menu Utama</strong><br>Pilih salah satu Sub Bab untuk mulai membaca materi, atau klik Latihan Soal untuk mengerjakan soal.</div>
+      </div>
+      <div class="cara-item">
+        <span class="cara-icon">👆</span>
+        <div><strong>Membalik Halaman</strong><br>Klik tombol <b>▶</b> / <b>◀</b> di kiri-kanan buku, atau <b>geser (swipe)</b> layar ke kiri/kanan untuk berpindah halaman.</div>
+      </div>
+      <div class="cara-item">
+        <span class="cara-icon">⌨️</span>
+        <div><strong>Keyboard</strong><br>Gunakan tombol <b>← →</b> pada keyboard untuk membalik halaman (di komputer).</div>
+      </div>
+      <div class="cara-item">
+        <span class="cara-icon">🔵</span>
+        <div><strong>Titik Navigasi</strong><br>Titik-titik di bawah buku menunjukkan posisi halaman. Klik titik mana saja untuk loncat ke halaman tersebut.</div>
+      </div>
+      <div class="cara-item">
+        <span class="cara-icon">▶️</span>
+        <div><strong>Video</strong><br>Beberapa halaman berisi video. Klik tombol play untuk memutar video materi.</div>
+      </div>
+      <div class="cara-item">
+        <span class="cara-icon">📝</span>
+        <div><strong>Latihan Soal</strong><br>Jawab soal dengan memilih salah satu pilihan, lalu klik <b>Periksa Jawaban</b>. Tersedia 3 kesempatan per soal.</div>
+      </div>
+      <div class="cara-item">
+        <span class="cara-icon">↩️</span>
+        <div><strong>Kembali ke Menu</strong><br>Klik tombol <b>← Menu Utama</b> di pojok kanan atas untuk kembali ke halaman pilihan Sub Bab.</div>
+      </div>
+    </div>
+    <button class="cara-ok" onclick="closeCara()">Mengerti!</button>
+  </div>
 </div>
 
 <main id="flipbookPage" style="display:none">
@@ -236,7 +319,7 @@ footer{position:relative;z-index:1;text-align:center;padding:8px;font-size:.6rem
 <div id="quizPage">
   <div class="qp-header">
     <div class="qp-title">📝 Latihan Soal Ikatan Kimia</div>
-    <div class="qp-sub">Jawab setiap soal · 3 kesempatan per soal</div>
+    <div class="qp-sub">20 soal · 3 kesempatan per soal</div>
   </div>
   <div id="quizPanels"></div>
 </div>
@@ -265,7 +348,7 @@ const quizDataAll=[
   /* ── SUB BAB 1: Kestabilan Atom & Struktur Lewis (Soal 1-5) ── */
   [
     {
-      q:'1. Perhatikan konfigurasi elektron suatu atom berikut: 2,8,2\nAgar mencapai keadaan yang lebih stabil, atom tersebut cenderung ....',
+      q:'Perhatikan konfigurasi elektron suatu atom berikut: 2,8,2\nAgar mencapai keadaan yang lebih stabil, atom tersebut cenderung ....',
       opts:['A. menerima 2 elektron','B. menerima 6 elektron','C. melepaskan 2 elektron','D. berbagi 2 elektron'],
       ans:2,
       fb:[
@@ -276,7 +359,7 @@ const quizDataAll=[
       ok:'Hebat! Atom dengan konfigurasi 2,8,2 memiliki dua elektron valensi. Untuk mencapai konfigurasi stabil seperti gas mulia terdekat (2,8), atom tersebut lebih mudah melepaskan dua elektron daripada menerima enam elektron.'
     },
     {
-      q:'2. Atom X memiliki konfigurasi elektron 2,7. Agar memenuhi kaidah oktet, atom X sebaiknya ....',
+      q:'Atom X memiliki konfigurasi elektron 2,7. Agar memenuhi kaidah oktet, atom X sebaiknya ....',
       opts:['A. melepaskan 7 elektron','B. melepaskan 1 elektron','C. menerima 1 elektron','D. menerima 7 elektron'],
       ans:2,
       fb:[
@@ -287,7 +370,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Atom dengan konfigurasi 2,7 hanya kekurangan satu elektron untuk memiliki delapan elektron pada kulit terluarnya, sehingga cenderung menerima satu elektron.'
     },
     {
-      q:'3. Mengapa sebagian besar atom membentuk ikatan kimia dengan atom lain?',
+      q:'Mengapa sebagian besar atom membentuk ikatan kimia dengan atom lain?',
       opts:['A. untuk memperbesar ukuran atom','B. untuk memperoleh konfigurasi elektron yang lebih stabil','C. untuk menambah jumlah proton','D. untuk meningkatkan nomor atom'],
       ans:1,
       fb:[
@@ -298,7 +381,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Sebagian besar atom membentuk ikatan kimia agar memperoleh konfigurasi elektron yang lebih stabil, umumnya menyerupai konfigurasi gas mulia sehingga energi sistem menjadi lebih rendah.'
     },
     {
-      q:'4. Perhatikan beberapa konfigurasi elektron berikut:\n(1) 2,8\n(2) 2,8,1\n(3) 2,8,8\n(4) 2,7\nKonfigurasi yang sudah stabil ditunjukkan oleh nomor ....',
+      q:'Perhatikan beberapa konfigurasi elektron berikut:\n(1) 2,8\n(2) 2,8,1\n(3) 2,8,8\n(4) 2,7\nKonfigurasi yang sudah stabil ditunjukkan oleh nomor ....',
       opts:['A. (1) dan (2)','B. (2) dan (4)','C. (1) dan (3)','D. (3) dan (4)'],
       ans:2,
       fb:[
@@ -309,7 +392,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Konfigurasi 2,8 dan 2,8,8 telah memiliki kulit valensi penuh sehingga menyerupai konfigurasi gas mulia dan bersifat relatif stabil.'
     },
     {
-      q:'5. Perhatikan pasangan unsur: Na (Z=11) dan Cl (Z=17).\nPembentukan ikatan ion antara kedua unsur tersebut terjadi karena ....',
+      q:'Perhatikan pasangan unsur: Na (Z=11) dan Cl (Z=17).\nPembentukan ikatan ion antara kedua unsur tersebut terjadi karena ....',
       opts:['A. natrium dan klorin saling berbagi elektron','B. natrium menerima satu elektron dari klorin','C. natrium melepaskan satu elektron kepada klorin','D. natrium dan klorin menggunakan elektron bersama'],
       ans:2,
       fb:[
@@ -323,7 +406,7 @@ const quizDataAll=[
   /* ── SUB BAB 2: Ikatan Ion (Soal 6-10) ── */
   [
     {
-      q:'1. Ion yang terbentuk dari atom magnesium (Mg) adalah ....',
+      q:'Ion yang terbentuk dari atom magnesium (Mg) adalah ....',
       opts:['A. Mg+','B. Mg2+','C. Mg2-','D. Mg-'],
       ans:1,
       fb:[
@@ -334,7 +417,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Magnesium memiliki konfigurasi elektron 2,8,2. Untuk mencapai konfigurasi stabil seperti neon, magnesium melepaskan dua elektron dan membentuk ion Mg2+.'
     },
     {
-      q:'2. Rumus senyawa yang terbentuk antara magnesium dan klorin adalah ....',
+      q:'Rumus senyawa yang terbentuk antara magnesium dan klorin adalah ....',
       opts:['A. MgCl','B. Mg2Cl','C. MgCl2','D. Mg2Cl2'],
       ans:2,
       fb:[
@@ -345,7 +428,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Magnesium membentuk ion Mg2+, sedangkan klorin membentuk ion Cl-. Agar total muatan senyawa netral diperlukan dua ion klorida untuk setiap satu ion magnesium sehingga rumusnya MgCl2.'
     },
     {
-      q:'3. Manakah pasangan unsur yang paling mungkin membentuk ikatan ion?',
+      q:'Manakah pasangan unsur yang paling mungkin membentuk ikatan ion?',
       opts:['A. H dan Cl','B. C dan O','C. Na dan O','D. N dan H'],
       ans:2,
       fb:[
@@ -356,7 +439,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Ikatan ion umumnya terbentuk antara logam dan nonlogam yang memiliki perbedaan keelektronegatifan besar. Natrium adalah logam dan oksigen adalah nonlogam.'
     },
     {
-      q:'4. Mengapa senyawa ion dapat menghantarkan listrik saat dilelehkan?',
+      q:'Mengapa senyawa ion dapat menghantarkan listrik saat dilelehkan?',
       opts:['A. karena mengandung atom logam','B. karena terdapat elektron bebas','C. karena ion-ion dapat bergerak bebas','D. karena senyawa ion mudah larut'],
       ans:2,
       fb:[
@@ -367,7 +450,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Saat meleleh, ion positif dan ion negatif dapat bergerak bebas sehingga mampu membawa muatan listrik.'
     },
     {
-      q:'5. Perhatikan diagram pembentukan ion berikut: X → X2+ + 2e-\nBerdasarkan persamaan tersebut, dapat disimpulkan bahwa ....',
+      q:'Perhatikan diagram pembentukan ion berikut: X → X2+ + 2e-\nBerdasarkan persamaan tersebut, dapat disimpulkan bahwa ....',
       opts:['A. X menerima dua elektron','B. X merupakan nonlogam','C. X mengalami reduksi','D. X melepaskan dua elektron'],
       ans:3,
       fb:[
@@ -381,7 +464,7 @@ const quizDataAll=[
   /* ── SUB BAB 3: Ikatan Kovalen (Soal 11-17) ── */
   [
     {
-      q:'1. Jenis ikatan kovalen yang terbentuk pada molekul H2 adalah ....',
+      q:'Jenis ikatan kovalen yang terbentuk pada molekul H2 adalah ....',
       opts:['A. ikatan kovalen tunggal','B. ikatan kovalen rangkap dua','C. ikatan kovalen rangkap tiga','D. ikatan kovalen koordinasi'],
       ans:0,
       fb:[
@@ -392,7 +475,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Setiap atom hidrogen menyumbangkan satu elektron sehingga terbentuk satu pasangan elektron bersama. Oleh karena itu, H2 memiliki ikatan kovalen tunggal.'
     },
     {
-      q:'2. Molekul O2 memiliki ....',
+      q:'Molekul O2 memiliki ....',
       opts:['A. satu pasangan elektron bersama','B. dua pasangan elektron bersama','C. tiga pasangan elektron bersama','D. empat pasangan elektron bersama'],
       ans:1,
       fb:[
@@ -403,7 +486,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Masing-masing atom oksigen membutuhkan dua elektron lagi untuk mencapai oktet sehingga keduanya berbagi dua pasangan elektron, membentuk ikatan kovalen rangkap dua.'
     },
     {
-      q:'3. Molekul nitrogen (N2) mempunyai ....',
+      q:'Molekul nitrogen (N2) mempunyai ....',
       opts:['A. satu ikatan kovalen tunggal','B. satu ikatan kovalen rangkap dua','C. satu ikatan kovalen rangkap tiga','D. satu ikatan kovalen koordinasi'],
       ans:2,
       fb:[
@@ -414,7 +497,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Masing-masing atom nitrogen memiliki lima elektron valensi dan membutuhkan tiga elektron lagi untuk mencapai oktet, sehingga terbentuk tiga pasangan elektron bersama.'
     },
     {
-      q:'4. Ikatan kovalen koordinasi terjadi ketika ....',
+      q:'Ikatan kovalen koordinasi terjadi ketika ....',
       opts:['A. masing-masing atom menyumbangkan satu elektron','B. seluruh pasangan elektron berasal dari satu atom','C. elektron berpindah dari logam ke nonlogam','D. dua ion bermuatan berlawanan saling tarik-menarik'],
       ans:1,
       fb:[
@@ -425,7 +508,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Pada ikatan kovalen koordinasi, pasangan elektron yang digunakan bersama berasal dari satu atom saja, sedangkan atom lain menyediakan orbital kosong untuk menerimanya.'
     },
     {
-      q:'5. Pada ion NH4+, ikatan kovalen koordinasi terbentuk antara ....',
+      q:'Pada ion NH4+, ikatan kovalen koordinasi terbentuk antara ....',
       opts:['A. atom N dan tiga atom H','B. atom N dan ion H+ tambahan','C. sesama atom H','D. ion H+ dengan ion H+'],
       ans:1,
       fb:[
@@ -436,7 +519,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Atom nitrogen pada NH3 masih memiliki satu pasangan elektron bebas. Pasangan elektron tersebut didonasikan kepada H+ sehingga terbentuk satu ikatan kovalen koordinasi pada ion NH4+.'
     },
     {
-      q:'6. Perhatikan tabel berikut:\nH2 → P | O2 → Q | N2 → R\nUrutan jenis ikatan yang benar adalah ....',
+      q:'Perhatikan tabel berikut:\nH2 → P | O2 → Q | N2 → R\nUrutan jenis ikatan yang benar adalah ....',
       opts:['A. P = rangkap dua, Q = tunggal, R = rangkap tiga','B. P = tunggal, Q = rangkap dua, R = rangkap tiga','C. P = tunggal, Q = rangkap tiga, R = koordinasi','D. P = koordinasi, Q = rangkap dua, R = tunggal'],
       ans:1,
       fb:[
@@ -447,7 +530,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. H2 memiliki satu pasangan elektron bersama, O2 memiliki dua pasangan, sedangkan N2 memiliki tiga pasangan elektron bersama.'
     },
     {
-      q:'7. Berdasarkan struktur Lewis O=C=O, molekul CO2 memiliki ....',
+      q:'Berdasarkan struktur Lewis O=C=O, molekul CO2 memiliki ....',
       opts:['A. dua ikatan kovalen tunggal','B. satu ikatan rangkap dua dan satu ikatan tunggal','C. dua ikatan kovalen rangkap dua','D. satu ikatan kovalen rangkap tiga'],
       ans:2,
       fb:[
@@ -461,7 +544,7 @@ const quizDataAll=[
   /* ── SUB BAB 4: Ikatan Logam (Soal 18-20) ── */
   [
     {
-      q:'1. Pernyataan: "Pada logam, elektron valensi tidak dimiliki oleh satu atom tertentu, tetapi bergerak bebas di antara ion-ion logam." Pernyataan tersebut menunjukkan bahwa ikatan logam terbentuk karena ....',
+      q:'Pernyataan: "Pada logam, elektron valensi tidak dimiliki oleh satu atom tertentu, tetapi bergerak bebas di antara ion-ion logam." Pernyataan tersebut menunjukkan bahwa ikatan logam terbentuk karena ....',
       opts:['A. perpindahan elektron dari logam ke nonlogam','B. penggunaan bersama pasangan elektron oleh dua atom','C. gaya tarik antara ion logam positif dan lautan elektron yang bergerak bebas','D. gaya tarik antara ion positif dan ion negatif'],
       ans:2,
       fb:[
@@ -472,7 +555,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Ikatan logam terjadi karena adanya gaya tarik elektrostatik antara kation logam dan elektron valensi yang terdelokalisasi (lautan elektron).'
     },
     {
-      q:'2. Sebuah kawat tembaga digunakan sebagai penghantar listrik karena ....',
+      q:'Sebuah kawat tembaga digunakan sebagai penghantar listrik karena ....',
       opts:['A. atom tembaga mudah berubah menjadi ion negatif','B. memiliki elektron bebas yang dapat bergerak membawa muatan listrik','C. mengandung ikatan ion yang kuat','D. memiliki molekul-molekul yang mudah berpindah tempat'],
       ans:1,
       fb:[
@@ -483,7 +566,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Elektron valensi pada logam dapat bergerak bebas di dalam kisi logam sehingga mampu menghantarkan arus listrik dengan sangat baik.'
     },
     {
-      q:'3. Perhatikan sifat-sifat berikut:\n(1) Mudah ditempa menjadi berbagai bentuk.\n(2) Dapat ditarik menjadi kawat tipis.\n(3) Menghantarkan panas dan listrik dengan baik.\nSifat-sifat tersebut dimiliki logam karena ....',
+      q:'Perhatikan sifat-sifat berikut:\n(1) Mudah ditempa menjadi berbagai bentuk.\n(2) Dapat ditarik menjadi kawat tipis.\n(3) Menghantarkan panas dan listrik dengan baik.\nSifat-sifat tersebut dimiliki logam karena ....',
       opts:['A. adanya pasangan elektron bebas pada setiap atom','B. elektron valensi dapat bergerak bebas sehingga ikatan tetap terjaga saat lapisan logam bergeser','C. logam tersusun atas molekul-molekul yang saling berjauhan','D. logam memiliki ikatan ion yang sangat kuat'],
       ans:1,
       fb:[
@@ -494,7 +577,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Elektron yang bergerak bebas tetap mempertahankan gaya tarik antara ion-ion logam walaupun lapisan atom bergeser. Inilah sebabnya logam dapat ditempa, ditarik menjadi kawat, dan tetap menghantarkan panas maupun listrik dengan baik.'
     },
     {
-      q:'4. Model yang digunakan untuk menjelaskan ikatan logam adalah ....',
+      q:'Model yang digunakan untuk menjelaskan ikatan logam adalah ....',
       opts:['A. model atom Bohr','B. model lautan elektron','C. model orbital hibridisasi','D. model kisi kristal ion'],
       ans:1,
       fb:[
@@ -505,7 +588,7 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Model lautan elektron menggambarkan elektron bebas mengelilingi ion-ion positif logam, sehingga mempertahankan ikatan logam.'
     },
     {
-      q:'5. Mengapa logam memiliki titik leleh yang relatif tinggi dibandingkan senyawa kovalen?',
+      q:'Mengapa logam memiliki titik leleh yang relatif tinggi dibandingkan senyawa kovalen?',
       opts:['A. karena logam memiliki massa atom yang besar','B. karena logam tersusun dari ion-ion negatif','C. karena tidak ada elektron dalam logam','D. karena gaya tarik antara ion positif dan lautan elektron sangat kuat'],
       ans:3,
       fb:[
@@ -518,9 +601,10 @@ const quizDataAll=[
   ],
 ];
 
-/* QUIZ STATE — gabung semua soal jadi 1 array */
-const allSoal=quizDataAll.flat();
-const quiz={data:allSoal,att:new Array(allSoal.length).fill(0),done:new Array(allSoal.length).fill(false),ok:new Array(allSoal.length).fill(false),sel:new Array(allSoal.length).fill(null),cur:0,built:false};
+/* QUIZ STATE — gabung semua soal jadi 1 array, ambil 20 saja */
+const allSoal=quizDataAll.flat().slice(0,20);
+const TOTAL_SOAL=20;
+const quiz={data:allSoal,att:new Array(TOTAL_SOAL).fill(0),done:new Array(TOTAL_SOAL).fill(false),ok:new Array(TOTAL_SOAL).fill(false),sel:new Array(TOTAL_SOAL).fill(null),cur:0,built:false};
 
 /* BOOK STATE */
 let curSubBab=-1,PAGES=[],SPREADS=[],TOTAL=0,curSpread=0,flipping=false,dragDX=0;
@@ -559,13 +643,18 @@ function buildQuizPanel(){
 /* BUILD QUIZ WIDGET — 1 quiz tunggal */
 function makeQuizWidget(){
   const wrap=document.createElement('div');wrap.className='qwrap';wrap.id='qwrapAll';
-  wrap.innerHTML=`<div class="qt-title">📝 Latihan Soal Ikatan Kimia</div><div class="qt-sub">Jawab satu per satu · 3 kesempatan tiap soal</div><div class="qpb-bg"><div class="qpb" id="qpbAll"></div></div><div class="qpl" id="qplAll">Soal 1 dari ${quiz.data.length}</div>`;
+  wrap.innerHTML=`<div class="qt-title">📝 Latihan Soal Ikatan Kimia</div><div class="qt-sub">Jawab satu per satu · 3 kesempatan tiap soal</div><div class="qpb-bg"><div class="qpb" id="qpbAll"></div></div><div class="qpl" id="qplAll">Soal 1 dari ${TOTAL_SOAL}</div>`;
   quiz.data.forEach((item,idx)=>{
     const card=document.createElement('div');card.className='q-card'+(idx===0?' active':'');card.id=`qc_${idx}`;
+
+    // nomor urut soal
+    const qnum=document.createElement('div');qnum.className='q-num';qnum.textContent=`Soal ${idx+1} dari ${TOTAL_SOAL}`;card.appendChild(qnum);
+
     const ar=document.createElement('div');ar.className='att-row';
     const al=document.createElement('span');al.className='att-lbl';al.textContent='Kesempatan:';ar.appendChild(al);
     for(let d=0;d<3;d++){const dot=document.createElement('span');dot.className='att-dot';dot.id=`qdot_${idx}_${d}`;ar.appendChild(dot);}
     card.appendChild(ar);
+
     const qt=document.createElement('div');qt.className='q-text';qt.textContent=item.q;card.appendChild(qt);
     const opts=document.createElement('div');opts.className='q-opts';
     item.opts.forEach((opt,oi)=>{
@@ -577,12 +666,14 @@ function makeQuizWidget(){
     card.appendChild(opts);
     const fb=document.createElement('div');fb.className='fb-box';fb.id=`fb_${idx}`;card.appendChild(fb);
     const btns=document.createElement('div');btns.className='q-btns';
-    const bc=document.createElement('button');bc.className='q-btn';bc.id=`bc_${idx}`;bc.textContent='Periksa Jawaban';bc.addEventListener('click',()=>checkAns(idx));
-    const bn=document.createElement('button');bn.className='q-btn q-btn-nxt';bn.id=`bn_${idx}`;bn.textContent=idx<quiz.data.length-1?'Soal Berikutnya →':'Lihat Hasil';bn.addEventListener('click',()=>nextQ(idx));
+    const bc=document.createElement('button');bc.className='q-btn';bc.id=`bc_${idx}`;bc.textContent='✔ Periksa Jawaban';bc.addEventListener('click',()=>checkAns(idx));
+    const bn=document.createElement('button');bn.className='q-btn q-btn-nxt';bn.id=`bn_${idx}`;
+    bn.textContent=idx<quiz.data.length-1?'Soal Berikutnya →':'🏁 Lihat Hasil';
+    bn.addEventListener('click',()=>nextQ(idx));
     btns.appendChild(bc);btns.appendChild(bn);card.appendChild(btns);wrap.appendChild(card);
   });
   const sp=document.createElement('div');sp.className='score-panel';sp.id='scorePanAll';
-  sp.innerHTML=`<div class="score-num" id="scoreNumAll">0/${quiz.data.length}</div><div class="score-msg" id="scoreMsgAll"></div><button class="score-rst" id="btnRstAll">🔄 Coba Lagi</button>`;
+  sp.innerHTML=`<div class="score-num" id="scoreNumAll">0/${TOTAL_SOAL}</div><div class="score-msg" id="scoreMsgAll"></div><button class="score-rst" id="btnRstAll">🔄 Coba Lagi</button>`;
   wrap.appendChild(sp);return wrap;
 }
 
@@ -631,12 +722,12 @@ function nextQ(idx){
 function updateQProg(){
   const done=quiz.done.filter(Boolean).length;
   const bar=document.getElementById('qpbAll');const lbl=document.getElementById('qplAll');
-  if(bar) bar.style.width=(done/quiz.data.length*100)+'%';
-  if(lbl) lbl.textContent=done<quiz.data.length?`Soal ${quiz.cur+1} dari ${quiz.data.length}`:'Semua soal selesai! ✅';
+  if(bar) bar.style.width=(done/TOTAL_SOAL*100)+'%';
+  if(lbl) lbl.textContent=done<TOTAL_SOAL?`Soal ${quiz.cur+1} dari ${TOTAL_SOAL}`:'Semua soal selesai! ✅';
 }
 function showScore(){
   const score=quiz.ok.filter(Boolean).length;
-  const total=quiz.data.length;const pct=Math.round(score/total*100);
+  const total=TOTAL_SOAL;const pct=Math.round(score/total*100);
   const panel=document.getElementById('scorePanAll');if(!panel) return;panel.classList.add('show');
   document.getElementById('scoreNumAll').textContent=`${score} / ${total}  (${pct}%)`;
   const hasEx=quiz.att.some((a,i)=>a>=3&&!quiz.ok[i]);
@@ -653,8 +744,8 @@ function showScore(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function resetQuiz(){
-  quiz.att=new Array(quiz.data.length).fill(0);quiz.done=new Array(quiz.data.length).fill(false);
-  quiz.ok=new Array(quiz.data.length).fill(false);quiz.sel=new Array(quiz.data.length).fill(null);quiz.cur=0;
+  quiz.att=new Array(TOTAL_SOAL).fill(0);quiz.done=new Array(TOTAL_SOAL).fill(false);
+  quiz.ok=new Array(TOTAL_SOAL).fill(false);quiz.sel=new Array(TOTAL_SOAL).fill(null);quiz.cur=0;
   quiz.data.forEach((_,idx)=>{
     const c=document.getElementById(`qc_${idx}`);if(c) c.classList.toggle('active',idx===0);
     _.opts.forEach((_,oi)=>{const l=document.getElementById(`opt_${idx}_${oi}`);if(l){l.classList.remove('correct','wrong');l.querySelector('input').checked=false;l.querySelector('input').disabled=false;}});
@@ -768,9 +859,14 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 let secs=0;
 setInterval(()=>{secs++;const h=String(Math.floor(secs/3600)).padStart(2,'0');const m=String(Math.floor((secs%3600)/60)).padStart(2,'0');const s=String(secs%60).padStart(2,'0');document.getElementById('timerVal').textContent=`${h}:${m}:${s}`;},1000);
 
-/* ══════════════════════════════════════════
-   INIT
-══════════════════════════════════════════ */
+/* MODAL CARA MENGGUNAKAN */
+function openCara(){document.getElementById('caraModal').classList.add('show');}
+function closeCara(e){
+  if(!e||e.target===document.getElementById('caraModal'))
+    document.getElementById('caraModal').classList.remove('show');
+}
+
+/* INIT */
 window.addEventListener('resize',()=>{if(activeView==='flipbook'&&!flipping) renderBook();});
 showView('menu');
 </script>
