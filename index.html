@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,500;0,600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{--b0:#08202f;--b1:#0f3d5c;--b2:#1a6496;--b3:#2980b9;--b4:#5dade2;--b5:#aed6f1;--b6:#d6eaf8;--b7:#eaf4fb;--white:#ffffff;--paper:#f8fcff;--flip-dur:0.72s;--flip-ease:cubic-bezier(.645,.045,.355,1);}
+:root{--b0:#08202f;--b1:#0f3d5c;--b2:#1a6496;--b3:#2980b9;--b4:#5dade2;--b5:#aed6f1;--b6:#d6eaf8;--b7:#eaf4fb;--white:#ffffff;--paper:#f8fcff;--flip-dur:0.45s;--flip-ease:cubic-bezier(.645,.045,.355,1);}
 html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient(150deg,#bcd9ee 0%,#dff0fb 45%,#b5d4eb 100%);overflow-x:hidden;-webkit-user-select:none;user-select:none;}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 15% 25%,rgba(41,128,185,.09) 0%,transparent 55%),radial-gradient(ellipse at 85% 75%,rgba(26,100,150,.11) 0%,transparent 55%);}
 /* HEADER */
@@ -54,7 +54,7 @@ header{position:sticky;top:0;z-index:300;background:linear-gradient(95deg,#060f1
 /* MAIN FLIPBOOK */
 main{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 54px);padding:22px 72px 16px;gap:18px;}
 #scene{perspective:2800px;position:relative;display:flex;align-items:center;justify-content:center;}
-.book-wrap{position:relative;display:flex;align-items:stretch;filter:drop-shadow(0 24px 60px rgba(8,32,47,.52));}
+.book-wrap{position:relative;display:flex;align-items:stretch;box-shadow:0 12px 40px rgba(8,32,47,.4);}
 .bside{position:relative;background:var(--paper);overflow:hidden;flex-shrink:0;}
 .bside-left{border-radius:3px 0 0 3px;box-shadow:inset -8px 0 20px rgba(0,0,0,.07);}
 .bside-right{border-radius:0 3px 3px 0;box-shadow:inset 8px 0 20px rgba(0,0,0,.07);}
@@ -63,12 +63,12 @@ main{position:relative;z-index:1;display:flex;flex-direction:column;align-items:
 .pface.vis{opacity:1;}
 .pface img,.pface video{width:100%;height:100%;object-fit:fill;display:block;}
 .pface-blank{width:100%;height:100%;background:linear-gradient(135deg,var(--b7),var(--b6));}
-.flip-card{position:absolute;top:0;transform-style:preserve-3d;z-index:200;pointer-events:none;will-change:transform;}
+.flip-card{position:absolute;top:0;transform-style:preserve-3d;z-index:200;pointer-events:none;}
 .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;background:var(--paper);}
 .fc-front{transform:rotateY(0deg);}
 .fc-back{transform:rotateY(180deg);}
 .fc-face img,.fc-face video{width:100%;height:100%;object-fit:fill;display:block;}
-.fc-curl{position:absolute;inset:0;pointer-events:none;z-index:3;opacity:0;transition:opacity .12s;background:linear-gradient(to left,rgba(0,0,0,.16) 0%,transparent 60%);}
+.fc-curl{position:absolute;inset:0;pointer-events:none;z-index:3;opacity:0;transition:opacity .1s;background:linear-gradient(to left,rgba(0,0,0,.13) 0%,transparent 60%);}
 .flip-card.going .fc-curl{opacity:1;}
 /* NAV */
 .nav-arr{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;background:rgba(41,128,185,.18);color:var(--b1);font-size:1.1rem;cursor:pointer;z-index:400;transition:background .2s,color .2s,transform .15s;display:flex;align-items:center;justify-content:center;}
@@ -169,7 +169,7 @@ main{position:relative;z-index:1;display:flex;flex-direction:column;align-items:
 .menu-cara-btn{margin-top:10px;background:transparent;border:1.5px solid var(--b4);border-radius:20px;padding:7px 20px;color:var(--b2);font-family:'Nunito',sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;transition:background .18s,color .18s;display:flex;align-items:center;gap:6px;}
 .menu-cara-btn:hover{background:var(--b6);color:var(--b1);}
 /* modal cara menggunakan */
-#caraModal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(8,32,47,.55);backdrop-filter:blur(3px);align-items:center;justify-content:center;padding:16px;}
+#caraModal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(8,32,47,.65);align-items:center;justify-content:center;padding:16px;}
 #caraModal.show{display:flex;}
 .cara-box{background:var(--white);border-radius:18px;padding:24px 22px 20px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto;-webkit-overflow-scrolling:touch;position:relative;box-shadow:0 24px 60px rgba(8,32,47,.35);}
 .cara-close{position:absolute;top:12px;right:14px;background:var(--b6);border:none;border-radius:50%;width:28px;height:28px;font-size:.8rem;cursor:pointer;color:var(--b1);font-weight:700;}
@@ -222,41 +222,41 @@ footer{position:relative;z-index:1;text-align:center;padding:8px;font-size:.6rem
   <div class="menu-grid">
     <div class="menu-card" onclick="openFlipbook(0)">
       <div class="menu-card-thumb">
-        <span class="menu-card-thumb-fallback"></span>
+        <span class="menu-card-thumb-fallback">⚛️</span>
         <img src="1.png" alt="Sub Bab 1" onerror="this.style.display='none'">
       </div>
       <div class="menu-card-body">
-        <div class="menu-card-title">Sub Bab 1 ⚛️</div>
+        <div class="menu-card-title">Sub Bab 1</div>
         <div class="menu-card-desc">Kestabilan Atom &amp; Struktur Lewis</div>
       </div>
     </div>
     <div class="menu-card" onclick="openFlipbook(1)">
       <div class="menu-card-thumb">
-        <span class="menu-card-thumb-fallback"></span>
+        <span class="menu-card-thumb-fallback">🔗</span>
         <img src="19.png" alt="Sub Bab 2" onerror="this.style.display='none'">
       </div>
       <div class="menu-card-body">
-        <div class="menu-card-title">Sub Bab 2 🔗</div>
+        <div class="menu-card-title">Sub Bab 2</div>
         <div class="menu-card-desc">Ikatan Ion</div>
       </div>
     </div>
     <div class="menu-card" onclick="openFlipbook(2)">
       <div class="menu-card-thumb">
-        <span class="menu-card-thumb-fallback"></span>
+        <span class="menu-card-thumb-fallback">🧬</span>
         <img src="28.png" alt="Sub Bab 3" onerror="this.style.display='none'">
       </div>
       <div class="menu-card-body">
-        <div class="menu-card-title">Sub Bab 3 🧬</div>
+        <div class="menu-card-title">Sub Bab 3</div>
         <div class="menu-card-desc">Ikatan Kovalen</div>
       </div>
     </div>
     <div class="menu-card" onclick="openFlipbook(3)">
       <div class="menu-card-thumb">
-        <span class="menu-card-thumb-fallback"></span>
+        <span class="menu-card-thumb-fallback">🔩</span>
         <img src="41.png" alt="Sub Bab 4" onerror="this.style.display='none'">
       </div>
       <div class="menu-card-body">
-        <div class="menu-card-title">Sub Bab 4 🔩</div>
+        <div class="menu-card-title">Sub Bab 4</div>
         <div class="menu-card-desc">Ikatan Logam</div>
       </div>
     </div>
@@ -398,34 +398,34 @@ const quizDataAll=[
       fb:[
         'Natrium memiliki 1 elektron valensi, klorin memiliki 7 elektron valensi. Manakah yang lebih cenderung melepaskan elektron dan manakah yang lebih cenderung menerimanya?',
         'Banyak siswa menganggap semua ikatan terbentuk karena penggunaan bersama elektron. Padahal ada jenis ikatan yang terbentuk melalui perpindahan elektron dari satu atom ke atom lain.',
-        'Jawaban yang benar adalah C. Natrium melepaskan satu elektron menjadi Na+, sedangkan klorin menerima elektron tersebut menjadi Cl-. Ikatan ion terbentuk karena adanya gaya tarik elektrostatik antara ion positif dan ion negatif.'
+        'Jawaban yang benar adalah C. Natrium melepaskan satu elektron menjadi Na+, sedangkan klorin menerima elektron tersebut menjadi Cl⁻. Ikatan ion terbentuk karena adanya gaya tarik elektrostatik antara ion positif dan ion negatif.'
       ],
-      ok:'Jawaban Anda benar. Natrium memiliki konfigurasi 2,8,1, sedangkan klorin memiliki konfigurasi 2,8,7. Natrium lebih mudah melepaskan satu elektron sehingga menjadi Na+, sedangkan klorin menerima satu elektron menjadi Cl-.'
+      ok:'Jawaban Anda benar. Natrium memiliki konfigurasi 2,8,1, sedangkan klorin memiliki konfigurasi 2,8,7. Natrium lebih mudah melepaskan satu elektron sehingga menjadi Na+, sedangkan klorin menerima satu elektron menjadi Cl⁻.'
     },
   ],
   /* ── SUB BAB 2: Ikatan Ion (Soal 6-10) ── */
   [
     {
       q:'Ion yang terbentuk dari atom magnesium (Mg) adalah ....',
-      opts:['A. Mg+','B. Mg2+','C. Mg2-','D. Mg-'],
+      opts:['A. Mg⁺','B. Mg²⁺','C. Mg²⁻','D. Mg⁻'],
       ans:1,
       fb:[
         'Hitung jumlah elektron valensi magnesium. Berapa elektron yang harus dilepaskan agar konfigurasi elektronnya menjadi stabil?',
         'Pikirkan hubungan antara jumlah elektron yang dilepaskan dengan muatan ion. Ketika atom kehilangan elektron, apakah muatannya menjadi positif atau negatif?',
-        'Jawaban yang benar adalah B. Mg2+. Magnesium melepaskan dua elektron sehingga jumlah proton lebih banyak daripada elektron, terbentuk ion bermuatan positif dua.'
+        'Jawaban yang benar adalah B. Mg²⁺. Magnesium melepaskan dua elektron sehingga jumlah proton lebih banyak daripada elektron, terbentuk ion bermuatan positif dua.'
       ],
-      ok:'Jawaban Anda benar. Magnesium memiliki konfigurasi elektron 2,8,2. Untuk mencapai konfigurasi stabil seperti neon, magnesium melepaskan dua elektron dan membentuk ion Mg2+.'
+      ok:'Jawaban Anda benar. Magnesium memiliki konfigurasi elektron 2,8,2. Untuk mencapai konfigurasi stabil seperti neon, magnesium melepaskan dua elektron dan membentuk ion Mg²⁺.'
     },
     {
       q:'Rumus senyawa yang terbentuk antara magnesium dan klorin adalah ....',
-      opts:['A. MgCl','B. Mg2Cl','C. MgCl2','D. Mg2Cl2'],
+      opts:['A. MgCl','B. Mg₂Cl','C. MgCl₂','D. Mg₂Cl₂'],
       ans:2,
       fb:[
         'Tentukan terlebih dahulu muatan ion magnesium dan ion klorida. Pikirkan bagaimana jumlah ion positif dan negatif dapat menghasilkan total muatan nol.',
-        'Pada senyawa ion, yang harus diperhatikan adalah keseimbangan muatan. Berapa ion Cl- yang diperlukan untuk menyeimbangkan satu ion Mg2+?',
-        'Jawaban yang benar adalah C. MgCl2. Satu ion Mg2+ memerlukan dua ion Cl- agar total muatan menjadi nol: (+2) + (-1) + (-1) = 0.'
+        'Pada senyawa ion, yang harus diperhatikan adalah keseimbangan muatan. Berapa ion Cl⁻ yang diperlukan untuk menyeimbangkan satu ion Mg²⁺?',
+        'Jawaban yang benar adalah C. MgCl₂. Satu ion Mg²⁺ memerlukan dua ion Cl⁻ agar total muatan menjadi nol: (+2) + (-1) + (-1) = 0.'
       ],
-      ok:'Jawaban Anda benar. Magnesium membentuk ion Mg2+, sedangkan klorin membentuk ion Cl-. Agar total muatan senyawa netral diperlukan dua ion klorida untuk setiap satu ion magnesium sehingga rumusnya MgCl2.'
+      ok:'Jawaban Anda benar. Magnesium membentuk ion Mg²⁺, sedangkan klorin membentuk ion Cl⁻. Agar total muatan senyawa netral diperlukan dua ion klorida untuk setiap satu ion magnesium sehingga rumusnya MgCl₂.'
     },
     {
       q:'Manakah pasangan unsur yang paling mungkin membentuk ikatan ion?',
@@ -450,13 +450,13 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Saat meleleh, ion positif dan ion negatif dapat bergerak bebas sehingga mampu membawa muatan listrik.'
     },
     {
-      q:'Perhatikan diagram pembentukan ion berikut: X → X2+ + 2e-\nBerdasarkan persamaan tersebut, dapat disimpulkan bahwa ....',
+      q:'Perhatikan diagram pembentukan ion berikut: X → X²⁺ + 2e-\nBerdasarkan persamaan tersebut, dapat disimpulkan bahwa ....',
       opts:['A. X menerima dua elektron','B. X merupakan nonlogam','C. X mengalami reduksi','D. X melepaskan dua elektron'],
       ans:3,
       fb:[
         'Perhatikan posisi elektron pada persamaan. Apakah elektron berada di sisi reaktan atau produk?',
         'Ketika elektron keluar dari suatu atom, apakah jumlah elektronnya bertambah atau berkurang? Bagaimana pengaruhnya terhadap muatan ion yang terbentuk?',
-        'Jawaban yang benar adalah D. Persamaan menunjukkan bahwa atom X kehilangan dua elektron sehingga terbentuk ion X2+. Kehilangan elektron menyebabkan muatan atom menjadi positif.'
+        'Jawaban yang benar adalah D. Persamaan menunjukkan bahwa atom X kehilangan dua elektron sehingga terbentuk ion X²⁺. Kehilangan elektron menyebabkan muatan atom menjadi positif.'
       ],
       ok:'Jawaban Anda benar. Tanda elektron berada di ruas kanan menunjukkan bahwa atom X kehilangan atau melepaskan dua elektron sehingga membentuk ion bermuatan positif dua.'
     },
@@ -464,35 +464,35 @@ const quizDataAll=[
   /* ── SUB BAB 3: Ikatan Kovalen (Soal 11-17) ── */
   [
     {
-      q:'Jenis ikatan kovalen yang terbentuk pada molekul H2 adalah ....',
+      q:'Jenis ikatan kovalen yang terbentuk pada molekul H₂ adalah ....',
       opts:['A. ikatan kovalen tunggal','B. ikatan kovalen rangkap dua','C. ikatan kovalen rangkap tiga','D. ikatan kovalen koordinasi'],
       ans:0,
       fb:[
         'Perhatikan jumlah elektron valensi atom hidrogen. Berapa elektron yang dapat disumbangkan masing-masing atom untuk membentuk pasangan elektron bersama?',
         'Jenis ikatan kovalen ditentukan oleh jumlah pasangan elektron yang dipakai bersama, bukan oleh jumlah atomnya.',
-        'Jawaban yang benar adalah A. Pada H2 hanya terdapat satu pasangan elektron bersama, sehingga terbentuk ikatan kovalen tunggal.'
+        'Jawaban yang benar adalah A. Pada H₂ hanya terdapat satu pasangan elektron bersama, sehingga terbentuk ikatan kovalen tunggal.'
       ],
-      ok:'Jawaban Anda benar. Setiap atom hidrogen menyumbangkan satu elektron sehingga terbentuk satu pasangan elektron bersama. Oleh karena itu, H2 memiliki ikatan kovalen tunggal.'
+      ok:'Jawaban Anda benar. Setiap atom hidrogen menyumbangkan satu elektron sehingga terbentuk satu pasangan elektron bersama. Oleh karena itu, H₂ memiliki ikatan kovalen tunggal.'
     },
     {
-      q:'Molekul O2 memiliki ....',
+      q:'Molekul O₂ memiliki ....',
       opts:['A. satu pasangan elektron bersama','B. dua pasangan elektron bersama','C. tiga pasangan elektron bersama','D. empat pasangan elektron bersama'],
       ans:1,
       fb:[
         'Tuliskan terlebih dahulu elektron valensi atom oksigen. Berapa elektron yang masih diperlukan agar setiap atom mencapai delapan elektron?',
-        'Coba gambarkan struktur Lewis O2 dan hitung jumlah pasangan elektron yang digunakan bersama.',
-        'Jawaban yang benar adalah B. Pada molekul O2 terdapat dua pasangan elektron yang dipakai bersama, sehingga terbentuk ikatan kovalen rangkap dua.'
+        'Coba gambarkan struktur Lewis O₂ dan hitung jumlah pasangan elektron yang digunakan bersama.',
+        'Jawaban yang benar adalah B. Pada molekul O₂ terdapat dua pasangan elektron yang dipakai bersama, sehingga terbentuk ikatan kovalen rangkap dua.'
       ],
       ok:'Jawaban Anda benar. Masing-masing atom oksigen membutuhkan dua elektron lagi untuk mencapai oktet sehingga keduanya berbagi dua pasangan elektron, membentuk ikatan kovalen rangkap dua.'
     },
     {
-      q:'Molekul nitrogen (N2) mempunyai ....',
+      q:'Molekul nitrogen (N₂) mempunyai ....',
       opts:['A. satu ikatan kovalen tunggal','B. satu ikatan kovalen rangkap dua','C. satu ikatan kovalen rangkap tiga','D. satu ikatan kovalen koordinasi'],
       ans:2,
       fb:[
         'Hitung elektron valensi atom nitrogen. Berapa elektron yang masih diperlukan agar memenuhi kaidah oktet?',
         'Jika setiap atom membutuhkan tiga elektron tambahan, berapa pasangan elektron yang harus digunakan bersama?',
-        'Jawaban yang benar adalah C. Pada molekul N2 terdapat tiga pasangan elektron bersama sehingga terbentuk ikatan kovalen rangkap tiga yang sangat kuat.'
+        'Jawaban yang benar adalah C. Pada molekul N₂ terdapat tiga pasangan elektron bersama sehingga terbentuk ikatan kovalen rangkap tiga yang sangat kuat.'
       ],
       ok:'Jawaban Anda benar. Masing-masing atom nitrogen memiliki lima elektron valensi dan membutuhkan tiga elektron lagi untuk mencapai oktet, sehingga terbentuk tiga pasangan elektron bersama.'
     },
@@ -508,37 +508,37 @@ const quizDataAll=[
       ok:'Jawaban Anda benar. Pada ikatan kovalen koordinasi, pasangan elektron yang digunakan bersama berasal dari satu atom saja, sedangkan atom lain menyediakan orbital kosong untuk menerimanya.'
     },
     {
-      q:'Pada ion NH4+, ikatan kovalen koordinasi terbentuk antara ....',
-      opts:['A. atom N dan tiga atom H','B. atom N dan ion H+ tambahan','C. sesama atom H','D. ion H+ dengan ion H+'],
+      q:'Pada ion NH₄⁺, ikatan kovalen koordinasi terbentuk antara ....',
+      opts:['A. atom N dan tiga atom H','B. atom N dan ion H⁺ tambahan','C. sesama atom H','D. ion H⁺ dengan ion H⁺'],
       ans:1,
       fb:[
-        'Perhatikan asal pembentukan NH4+. Apakah semua atom H berasal dari proses yang sama?',
+        'Perhatikan asal pembentukan NH₄⁺. Apakah semua atom H berasal dari proses yang sama?',
         'Ingat kembali pasangan elektron bebas pada atom nitrogen. Pasangan elektron tersebut dapat digunakan untuk mengikat partikel yang tidak memiliki elektron.',
-        'Jawaban yang benar adalah B. Ikatan koordinasi pada NH4+ terbentuk ketika pasangan elektron bebas nitrogen didonasikan kepada H+.'
+        'Jawaban yang benar adalah B. Ikatan koordinasi pada NH₄⁺ terbentuk ketika pasangan elektron bebas nitrogen didonasikan kepada H⁺.'
       ],
-      ok:'Jawaban Anda benar. Atom nitrogen pada NH3 masih memiliki satu pasangan elektron bebas. Pasangan elektron tersebut didonasikan kepada H+ sehingga terbentuk satu ikatan kovalen koordinasi pada ion NH4+.'
+      ok:'Jawaban Anda benar. Atom nitrogen pada NH₃ masih memiliki satu pasangan elektron bebas. Pasangan elektron tersebut didonasikan kepada H⁺ sehingga terbentuk satu ikatan kovalen koordinasi pada ion NH₄⁺.'
     },
     {
-      q:'Perhatikan tabel berikut:\nH2 → P | O2 → Q | N2 → R\nUrutan jenis ikatan yang benar adalah ....',
+      q:'Perhatikan tabel berikut:\nH₂ → P | O₂ → Q | N₂ → R\nUrutan jenis ikatan yang benar adalah ....',
       opts:['A. P = rangkap dua, Q = tunggal, R = rangkap tiga','B. P = tunggal, Q = rangkap dua, R = rangkap tiga','C. P = tunggal, Q = rangkap tiga, R = koordinasi','D. P = koordinasi, Q = rangkap dua, R = tunggal'],
       ans:1,
       fb:[
         'Hitung jumlah pasangan elektron bersama pada masing-masing molekul.',
         'Hubungkan struktur Lewis setiap molekul dengan jumlah pasangan elektron yang digunakan bersama.',
-        'Jawaban yang benar adalah B. H2: ikatan tunggal | O2: ikatan rangkap dua | N2: ikatan rangkap tiga.'
+        'Jawaban yang benar adalah B. H₂: ikatan tunggal | O₂: ikatan rangkap dua | N₂: ikatan rangkap tiga.'
       ],
-      ok:'Jawaban Anda benar. H2 memiliki satu pasangan elektron bersama, O2 memiliki dua pasangan, sedangkan N2 memiliki tiga pasangan elektron bersama.'
+      ok:'Jawaban Anda benar. H₂ memiliki satu pasangan elektron bersama, O₂ memiliki dua pasangan, sedangkan N₂ memiliki tiga pasangan elektron bersama.'
     },
     {
-      q:'Berdasarkan struktur Lewis O=C=O, molekul CO2 memiliki ....',
+      q:'Berdasarkan struktur Lewis O=C=O, molekul CO₂ memiliki ....',
       opts:['A. dua ikatan kovalen tunggal','B. satu ikatan rangkap dua dan satu ikatan tunggal','C. dua ikatan kovalen rangkap dua','D. satu ikatan kovalen rangkap tiga'],
       ans:2,
       fb:[
         'Perhatikan jumlah garis yang menghubungkan atom C dengan atom O pada struktur Lewis.',
         'Setiap dua garis pada struktur Lewis menunjukkan satu ikatan rangkap dua. Hitung jumlah garis di kedua sisi atom karbon.',
-        'Jawaban yang benar adalah C. Pada molekul CO2 terdapat dua ikatan kovalen rangkap dua, yaitu antara karbon dengan masing-masing atom oksigen, sehingga seluruh atom memenuhi kaidah oktet.'
+        'Jawaban yang benar adalah C. Pada molekul CO₂ terdapat dua ikatan kovalen rangkap dua, yaitu antara karbon dengan masing-masing atom oksigen, sehingga seluruh atom memenuhi kaidah oktet.'
       ],
-      ok:'Jawaban Anda benar. Pada struktur Lewis CO2, atom karbon berbagi dua pasangan elektron dengan setiap atom oksigen sehingga terbentuk dua ikatan kovalen rangkap dua.'
+      ok:'Jawaban Anda benar. Pada struktur Lewis CO₂ , atom karbon berbagi dua pasangan elektron dengan setiap atom oksigen sehingga terbentuk dua ikatan kovalen rangkap dua.'
     },
   ],
   /* ── SUB BAB 4: Ikatan Logam (Soal 18-20) ── */
@@ -613,6 +613,7 @@ let activeView='menu';
 
 /* VIEW SWITCHING */
 function showView(v){
+  if(v!=='flipbook') pauseAllVideos();
   activeView=v;
   document.getElementById('menuUtama').style.display=v==='menu'?'flex':'none';
   document.getElementById('flipbookPage').style.display=v==='flipbook'?'flex':'none';
@@ -769,10 +770,32 @@ function makeFace(pi,w,h){
   if(pi===null){const b=document.createElement('div');b.className='pface-blank';face.appendChild(b);}
   else{
     const p=PAGES[pi];
-    if(p.type==='img'){const img=document.createElement('img');img.src=p.src;img.alt='Halaman '+(pi+1);img.loading='lazy';face.appendChild(img);}
-    else if(p.type==='video'){const v=document.createElement('video');v.controls=true;v.preload='metadata';v.setAttribute('playsinline','');v.setAttribute('controlslist','nodownload');v.style.cssText='width:100%;height:100%;object-fit:fill;display:block;';const src=document.createElement('source');src.src=p.src;src.type='video/mp4';v.appendChild(src);face.appendChild(v);}
+    if(p.type==='img'){
+      const img=document.createElement('img');
+      img.alt='Halaman '+(pi+1);
+      img.loading='lazy';
+      img.decoding='async';
+      img.src=p.src;
+      face.appendChild(img);
+    } else if(p.type==='video'){
+      const v=document.createElement('video');
+      v.controls=true;v.preload='none'; // 'none' = tidak preload, hemat memori
+      v.setAttribute('playsinline','');
+      v.setAttribute('controlslist','nodownload');
+      v.setAttribute('webkit-playsinline',''); // iOS Safari lama
+      v.style.cssText='width:100%;height:100%;object-fit:fill;display:block;';
+      const src=document.createElement('source');src.src=p.src;src.type='video/mp4';
+      v.appendChild(src);face.appendChild(v);
+    }
   }
   return face;
+}
+
+/* PAUSE semua video aktif (panggil sebelum flip) */
+function pauseAllVideos(){
+  document.querySelectorAll('video').forEach(v=>{
+    if(!v.paused){v.pause();}
+  });
 }
 
 /* DRAG ZONE */
@@ -787,8 +810,7 @@ function makeDZ(side,w,h){
   return dz;
 }
 
-/* FLIP */
-function tryFlip(dir){if(flipping) return;if(dir==='fwd'&&curSpread>=TOTAL-1) return;if(dir==='back'&&curSpread<=0) return;doFlip(dir);}
+function tryFlip(dir){if(flipping) return;if(dir==='fwd'&&curSpread>=TOTAL-1) return;if(dir==='back'&&curSpread<=0) return;pauseAllVideos();doFlip(dir);}
 function doFlip(dir){
   flipping=true;const{w,h}=pageSize();const from=curSpread;const to=dir==='fwd'?curSpread+1:curSpread-1;
   const[cL,cR]=SPREADS[from];const[nL,nR]=SPREADS[to];
@@ -800,7 +822,11 @@ function doFlip(dir){
   else{const ff=makeFace(nR,w,h);ff.classList.add('vis');front.appendChild(ff);const bf=makeFace(cL,w,h);bf.classList.add('vis');back.appendChild(bf);front.appendChild(curl);card.style.cssText+=`left:0;top:0;transform-origin:right center;transform:rotateY(-180deg);`;if(curLF) curLF.classList.remove('vis');}
   card.appendChild(front);card.appendChild(back);bookWrapEl.appendChild(card);
   requestAnimationFrame(()=>{card.classList.add('going');card.style.transition=`transform var(--flip-dur) var(--flip-ease)`;card.style.transform=dir==='fwd'?'rotateY(-180deg)':'rotateY(0deg)';});
-  card.addEventListener('transitionend',()=>{curSpread=to;flipping=false;renderBook();},{once:true});
+  card.addEventListener('transitionend',()=>{
+    // bersihkan card animasi dari DOM setelah selesai (bebaskan memori)
+    card.remove();
+    curSpread=to;flipping=false;renderBook();
+  },{once:true});
 }
 
 /* TOUCH */
