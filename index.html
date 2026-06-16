@@ -61,7 +61,7 @@ main{position:relative;z-index:1;display:flex;flex-direction:column;align-items:
 .spine{flex-shrink:0;position:relative;z-index:10;width:7px;background:linear-gradient(to right,rgba(0,0,0,.25) 0%,rgba(255,255,255,.4) 35%,rgba(255,255,255,.15) 65%,rgba(0,0,0,.25) 100%);box-shadow:-2px 0 6px rgba(0,0,0,.15),2px 0 6px rgba(0,0,0,.15);}
 .pface{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--paper);opacity:0;transition:opacity .1s;overflow:hidden;}
 .pface.vis{opacity:1;}
-.pface img,.pface video{width:100%;height:100%;object-fit:fill;display:block;}
+.pface img,.pface video{width:100%;height:100%;object-fit:fill;display:block;} .pface video{pointer-events:auto;position:relative;z-index:60;}
 .pface-blank{width:100%;height:100%;background:linear-gradient(135deg,var(--b7),var(--b6));}
 .flip-card{position:absolute;top:0;transform-style:preserve-3d;z-index:200;pointer-events:none;}
 .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;background:var(--paper);}
@@ -77,7 +77,7 @@ main{position:relative;z-index:1;display:flex;flex-direction:column;align-items:
 .nav-prev{left:-52px;}
 .nav-next{right:-52px;}
 /* DRAG ZONE */
-.drag-zone{position:absolute;bottom:0;height:56px;width:100%;z-index:50;cursor:grab;}
+.drag-zone{position:absolute;bottom:0;height:56px;width:100%;z-index:50;cursor:grab;} .has-video .drag-zone{pointer-events:none;display:none;}
 .drag-zone:active{cursor:grabbing;}
 .peel{position:absolute;bottom:0;width:28px;height:28px;background:linear-gradient(135deg,transparent 50%,rgba(41,128,185,.12) 50%);}
 .peel-r{right:0;border-radius:0 0 3px 0;}
@@ -779,13 +779,15 @@ function makeFace(pi,w,h){
       face.appendChild(img);
     } else if(p.type==='video'){
       const v=document.createElement('video');
-      v.controls=true;v.preload='none'; // 'none' = tidak preload, hemat memori
+      v.controls=true;v.preload='metadata';
       v.setAttribute('playsinline','');
-      v.setAttribute('controlslist','nodownload');
-      v.setAttribute('webkit-playsinline',''); // iOS Safari lama
-      v.style.cssText='width:100%;height:100%;object-fit:fill;display:block;';
+      v.setAttribute('webkit-playsinline','');
+      v.style.cssText='width:100%;height:100%;object-fit:contain;display:block;background:#000;pointer-events:auto;position:relative;z-index:60;';
       const src=document.createElement('source');src.src=p.src;src.type='video/mp4';
       v.appendChild(src);face.appendChild(v);
+      // Tandai face ini sebagai video agar drag-zone dinonaktifkan
+      face.classList.add('has-video');
+      face.style.pointerEvents='auto';
     }
   }
   return face;
@@ -800,6 +802,7 @@ function pauseAllVideos(){
 
 /* DRAG ZONE */
 function makeDZ(side,w,h){
+  // Jangan buat drag-zone jika sisi ini menampilkan video (agar kontrol video tidak terblokir)
   const dz=document.createElement('div');dz.className='drag-zone';dz.style.cssText=`width:${w}px;height:56px;bottom:0;left:0;position:absolute;z-index:50;`;
   const peel=document.createElement('div');peel.className=`peel peel-${side==='right'?'r':'l'}`;dz.appendChild(peel);
   const hint=document.createElement('span');hint.className=`dz-hint dz-hint-${side==='right'?'r':'l'}`;hint.textContent=side==='right'?'Berikutnya':'Sebelumnya';dz.appendChild(hint);
@@ -840,6 +843,12 @@ function setupTouchSwipe(){
 }
 document.addEventListener('keydown',e=>{if(activeView!=='flipbook') return;if(e.key==='ArrowRight'||e.key==='ArrowDown')tryFlip('fwd');if(e.key==='ArrowLeft'||e.key==='ArrowUp')tryFlip('back');});
 
+/* Helper: cek apakah page index adalah video */
+function isVideoPage(pi) {
+  if (pi === null || pi === undefined) return false;
+  return PAGES[pi] && PAGES[pi].type === 'video';
+}
+
 /* RENDER BOOK */
 function renderBook(){
   const{w,h}=pageSize();const scene=document.getElementById('scene');scene.innerHTML='';
@@ -847,16 +856,16 @@ function renderBook(){
   const[li,ri]=SPREADS[curSpread];const isCover=li===null;const isSingleL=ri===null;
   if(isCover){
     rightSideEl=document.createElement('div');rightSideEl.className='bside bside-right';rightSideEl.style.cssText=`width:${w}px;height:${h}px;border-radius:3px;box-shadow:8px 0 30px rgba(0,0,0,.3),-2px 0 8px rgba(0,0,0,.1);`;
-    curRF=makeFace(ri,w,h);curRF.classList.add('vis');rightSideEl.appendChild(curRF);rightSideEl.appendChild(makeDZ('right',w,h));leftSideEl=null;curLF=null;bookWrapEl.appendChild(rightSideEl);
+    curRF=makeFace(ri,w,h);curRF.classList.add('vis');rightSideEl.appendChild(curRF);if(!isVideoPage(ri))rightSideEl.appendChild(makeDZ('right',w,h));leftSideEl=null;curLF=null;bookWrapEl.appendChild(rightSideEl);
   } else if(isSingleL){
     leftSideEl=document.createElement('div');leftSideEl.className='bside bside-left';leftSideEl.style.cssText=`width:${w}px;height:${h}px;border-radius:3px;box-shadow:-8px 0 30px rgba(0,0,0,.3),2px 0 8px rgba(0,0,0,.1);`;
-    curLF=makeFace(li,w,h);curLF.classList.add('vis');leftSideEl.appendChild(curLF);leftSideEl.appendChild(makeDZ('left',w,h));rightSideEl=null;curRF=null;bookWrapEl.appendChild(leftSideEl);
+    curLF=makeFace(li,w,h);curLF.classList.add('vis');leftSideEl.appendChild(curLF);if(!isVideoPage(li))leftSideEl.appendChild(makeDZ('left',w,h));rightSideEl=null;curRF=null;bookWrapEl.appendChild(leftSideEl);
   } else {
     leftSideEl=document.createElement('div');leftSideEl.className='bside bside-left';leftSideEl.style.cssText=`width:${w}px;height:${h}px;`;
     const spEl=document.createElement('div');spEl.className='spine';spEl.style.height=h+'px';
     rightSideEl=document.createElement('div');rightSideEl.className='bside bside-right';rightSideEl.style.cssText=`width:${w}px;height:${h}px;`;
     curLF=makeFace(li,w,h);curLF.classList.add('vis');curRF=makeFace(ri,w,h);curRF.classList.add('vis');
-    leftSideEl.appendChild(curLF);leftSideEl.appendChild(makeDZ('left',w,h));rightSideEl.appendChild(curRF);rightSideEl.appendChild(makeDZ('right',w,h));
+    leftSideEl.appendChild(curLF);if(!isVideoPage(li))leftSideEl.appendChild(makeDZ('left',w,h));rightSideEl.appendChild(curRF);if(!isVideoPage(ri))rightSideEl.appendChild(makeDZ('right',w,h));
     bookWrapEl.appendChild(leftSideEl);bookWrapEl.appendChild(spEl);bookWrapEl.appendChild(rightSideEl);
   }
   prevBtn=document.createElement('button');prevBtn.className='nav-arr nav-prev';prevBtn.innerHTML='&#9664;';prevBtn.title='Sebelumnya';prevBtn.addEventListener('click',()=>tryFlip('back'));
